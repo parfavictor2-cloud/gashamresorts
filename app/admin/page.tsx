@@ -4,8 +4,6 @@ import { revalidatePath } from 'next/cache';
 interface RoomRow {
   id: number;
   name: string;
-  price: string;
-  status: string;
   image_url: string;
 }
 
@@ -37,27 +35,25 @@ async function updateHeroSettings(formData: FormData) {
   revalidatePath('/admin');
 }
 
-// Server Action to add a room with image support
+// Server Action to add a room (Name & Real Resort Image URL only)
 async function addRoom(formData: FormData) {
   'use server';
-  const name = formData.get('name') as string;
-  const price = formData.get('price') as string;
-  const imageUrl = formData.get('imageUrl') as string;
+  try {
+    const name = formData.get('name') as string;
+    const imageUrl = formData.get('imageUrl') as string;
 
-  if (!name) return;
+    if (!name || !imageUrl) return;
 
-  await query(
-    'INSERT INTO rooms (name, price, image_url, status) VALUES ($1, $2, $3, $4)',
-    [
-      name, 
-      price || 'Inquire', 
-      imageUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945', 
-      'Available'
-    ]
-  );
+    await query(
+      'INSERT INTO rooms (name, image_url) VALUES ($1, $2)',
+      [name, imageUrl]
+    );
 
-  revalidatePath('/rooms');
-  revalidatePath('/admin');
+    revalidatePath('/rooms');
+    revalidatePath('/admin');
+  } catch (error) {
+    console.error('Error adding room:', error);
+  }
 }
 
 // Server Action to delete a room
@@ -71,17 +67,17 @@ async function deleteRoom(formData: FormData) {
   revalidatePath('/admin');
 }
 
-// Server Action to add a gallery item with a cloud image URL
+// Server Action to add a gallery item
 async function addGalleryItem(formData: FormData) {
   'use server';
   const title = formData.get('title') as string;
   const imageUrl = formData.get('imageUrl') as string;
 
-  if (!title) return;
+  if (!title || !imageUrl) return;
 
   await query(
     'INSERT INTO gallery (title, image_url) VALUES ($1, $2)',
-    [title, imageUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945']
+    [title, imageUrl]
   );
 
   revalidatePath('/gallery');
@@ -176,7 +172,7 @@ export default async function AdminPage() {
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
               <h2 className="font-serif text-2xl font-bold text-charcoal mb-2">Add New Room / Suite</h2>
-              <p className="text-stone-600 text-sm mb-6">Persists instantly to your Neon cloud database across all browsers.</p>
+              <p className="text-stone-600 text-sm mb-6">Upload real resort photos via ImgBB and link them instantly.</p>
               
               <form action={addRoom} className="space-y-4">
                 <div>
@@ -184,22 +180,13 @@ export default async function AdminPage() {
                   <input 
                     type="text" 
                     name="name"
-                    placeholder="e.g. Executive Luxury Suite" 
+                    placeholder="e.g. Executive Single Suite" 
                     className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Price / Rate Description</label>
-                  <input 
-                    type="text" 
-                    name="price"
-                    placeholder="e.g. ₦30,000 / night" 
-                    className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Room Image URL (ImgBB Direct Link)</label>
+                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Real Resort Image URL (ImgBB Direct Link)</label>
                   <input 
                     type="url" 
                     name="imageUrl"
@@ -212,7 +199,7 @@ export default async function AdminPage() {
                   type="submit" 
                   className="w-full bg-gold hover:bg-gold-secondary text-charcoal font-semibold py-3 rounded-lg transition-all shadow-sm mt-4 cursor-pointer"
                 >
-                  Save Room to Cloud Database
+                  Save Suite to Cloud Database
                 </button>
               </form>
             </div>
@@ -232,7 +219,7 @@ export default async function AdminPage() {
                       </div>
                       <div>
                         <h3 className="font-serif font-bold text-charcoal text-sm">{room.name}</h3>
-                        <span className="text-xs text-stone-500">Rate: {room.price}</span>
+                        <span className="text-xs text-stone-500">Booking Ready</span>
                       </div>
                     </div>
                     <form action={deleteRoom}>
@@ -251,7 +238,7 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        {/* Gallery Manager Section with Add & Delete */}
+        {/* Gallery Manager Section */}
         <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm">
           <h2 className="font-serif text-2xl font-bold text-charcoal mb-2">Cloud Gallery Manager</h2>
           <p className="text-stone-600 text-sm mb-6">Add or delete permanent cloud image URLs (ImgBB) that sync globally across every browser.</p>

@@ -9,12 +9,12 @@ export default function Navbar() {
           
           {/* Logo & SEO-Optimized Brand Wordmark */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 flex items-center justify-center">
+            <div className="relative w-12 h-12 flex items-center justify-center">
               <Image 
-                src="/logo-placeholder.svg" 
+                src="/image.png" 
                 alt="Gasham Resorts and Suites Logo - Langtang North Hotel" 
-                width={40} 
-                height={40}
+                fill
+                className="object-contain"
                 priority
               />
             </div>

@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import { query } from '../lib/db';
+
+export const metadata: Metadata = {
+  title: 'Photo Gallery',
+  description: 'Take a visual tour of our rooms, restaurant, bar, and relaxation spaces at Gasham Resorts and Suites in Langtang North.',
+};
 
 export default async function GalleryPage() {
   const result = await query('SELECT * FROM gallery ORDER BY id DESC');

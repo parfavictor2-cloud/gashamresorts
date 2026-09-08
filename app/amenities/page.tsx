@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Resort Amenities & Facilities | Gasham Resorts and Suites Langtang North',
+export const metadata: Metadata = {
+  title: 'Resort Amenities & Facilities',
   description: 'Discover world-class hospitality facilities at Gasham Resorts and Suites. Enjoy 24/7 power, our onsite bar, restaurant serving local dishes, and football viewing centre.',
 };
 

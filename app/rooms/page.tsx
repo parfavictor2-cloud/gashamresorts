@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import { query } from '../lib/db';
+
+export const metadata: Metadata = {
+  title: 'Rooms & Executive Suites',
+  description: 'Explore comfortable single and double suites at Gasham Resorts and Suites along FGGC Road, Langtang North.',
+};
 
 export default async function RoomsPage() {
   const roomsResult = await query('SELECT * FROM rooms ORDER BY id DESC');

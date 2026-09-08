@@ -1,7 +1,8 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Contact & Location | Gasham Resorts and Suites Langtang North',
+export const metadata: Metadata = {
+  title: 'Contact & Location',
   description: 'Get in touch with Gasham Resorts and Suites in Langtang North, Plateau State. Located past Jimmy Cato Junction along FGGC Road. Call 0810 416 9470.',
 };
 

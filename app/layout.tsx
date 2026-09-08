@@ -19,7 +19,7 @@ const workSans = Work_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://gashamresorts.vercel.app'),
   title: {
-    default: 'Gasham Resorts and Suites | Langtang North Hotel & Bar',
+    default: 'Gasham Resorts and Suites | Langtang North',
     template: '%s | Gasham Resorts and Suites',
   },
   description: 'Experience premium comfort at Gasham Resorts and Suites in Langtang North, Plateau State. Featuring single and double suites, 24/7 power, restaurant, bar, and viewing centre along FGGC Road.',
@@ -61,6 +61,11 @@ export default function RootLayout({
     },
     url: 'https://gashamresorts.vercel.app',
     priceRange: '₦₦',
+    amenityFeature: [
+      { '@type': 'LocationFeatureSpecification', name: '24/7 Power Supply', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Restaurant & Bar', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Viewing Centre', value: true },
+    ],
   };
 
   return (

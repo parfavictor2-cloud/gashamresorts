@@ -1,5 +1,33 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { query } from './lib/db';
+
+export const metadata: Metadata = {
+  title: 'Gasham Resorts and Suites | Luxury Accommodation in Langtang North',
+  description: 'Experience absolute comfort, 24/7 power supply, secure parking, and fine hospitality at Gasham Resorts and Suites past Jimmy Cato Junction along FGGC Road, Langtang North, Plateau State.',
+  openGraph: {
+    title: 'Gasham Resorts and Suites | Luxury Accommodation in Langtang North',
+    description: 'Experience absolute comfort, 24/7 power supply, secure parking, and fine hospitality at Gasham Resorts and Suites along FGGC Road, Langtang North.',
+    url: 'https://gashamresorts.com',
+    siteName: 'Gasham Resorts and Suites',
+    images: [
+      {
+        url: '/image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Gasham Resorts and Suites Logo',
+      },
+    ],
+    locale: 'en_NG',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gasham Resorts and Suites | Luxury Accommodation in Langtang North',
+    description: 'Experience absolute comfort, 24/7 power supply, and fine hospitality in Langtang North, Plateau State.',
+    images: ['/image.png'],
+  },
+};
 
 export default async function Home() {
   // Fetch dedicated hero settings from Neon database

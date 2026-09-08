@@ -1,6 +1,19 @@
 import { query } from '../lib/db';
 import { revalidatePath } from 'next/cache';
 
+type RoomRow = {
+  id: string | number;
+  name: string;
+  price: string;
+  image_url: string;
+};
+
+type GalleryRow = {
+  id: string | number;
+  title: string;
+  image_url: string;
+};
+
 // Server Action to update the dedicated Hero Settings
 async function updateHeroSettings(formData: FormData) {
   'use server';
@@ -18,17 +31,23 @@ async function updateHeroSettings(formData: FormData) {
   revalidatePath('/admin');
 }
 
-// Server Action to add a room
+// Server Action to add a room with image support
 async function addRoom(formData: FormData) {
   'use server';
   const name = formData.get('name') as string;
   const price = formData.get('price') as string;
+  const imageUrl = formData.get('imageUrl') as string;
 
   if (!name) return;
 
   await query(
-    'INSERT INTO rooms (name, price, status) VALUES ($1, $2, $3)',
-    [name, price || 'Inquire', 'Available']
+    'INSERT INTO rooms (name, price, image_url, status) VALUES ($1, $2, $3, $4)',
+    [
+      name, 
+      price || 'Inquire', 
+      imageUrl || 'https://images.unsplash.com/photo-1566073771259-6a8506099945', 
+      'Available'
+    ]
   );
 
   revalidatePath('/rooms');
@@ -130,7 +149,7 @@ export default async function AdminPage() {
             </div>
             <button 
               type="submit" 
-              className="bg-gold hover:bg-gold-secondary text-charcoal font-semibold py-2.5 rounded-lg transition-all text-sm h-[42px] shadow-sm"
+              className="bg-gold hover:bg-gold-secondary text-charcoal font-semibold py-2.5 rounded-lg transition-all text-sm h-[42px] shadow-sm cursor-pointer"
             >
               Update Hero Banner
             </button>
@@ -164,9 +183,19 @@ export default async function AdminPage() {
                     className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                   />
                 </div>
+                <div>
+                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Room Cloud Image URL (ImgBB / Unsplash)</label>
+                  <input 
+                    type="url" 
+                    name="imageUrl"
+                    placeholder="https://i.ibb.co/... or https://..." 
+                    className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
+                    required
+                  />
+                </div>
                 <button 
                   type="submit" 
-                  className="w-full bg-gold hover:bg-gold-secondary text-charcoal font-semibold py-3 rounded-lg transition-all shadow-sm mt-4"
+                  className="w-full bg-gold hover:bg-gold-secondary text-charcoal font-semibold py-3 rounded-lg transition-all shadow-sm mt-4 cursor-pointer"
                 >
                   Save Room to Cloud Database
                 </button>
@@ -176,21 +205,26 @@ export default async function AdminPage() {
 
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm">
             <h2 className="font-serif text-2xl font-bold text-charcoal mb-4">Cloud Suites Inventory ({rooms.length})</h2>
-            <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
               {rooms.length === 0 ? (
                 <p className="text-stone-500 text-sm italic">No rooms in database yet.</p>
               ) : (
-                rooms.map((room: any) => (
-                  <div key={room.id} className="flex items-center justify-between p-4 bg-cream rounded-xl border border-stone-200">
-                    <div>
-                      <h3 className="font-serif font-bold text-charcoal">{room.name}</h3>
-                      <span className="text-xs text-stone-500">Rate: {room.price} | Status: {room.status}</span>
+                rooms.map((room: RoomRow) => (
+                  <div key={room.id} className="flex items-center justify-between p-4 bg-cream rounded-xl border border-stone-200 gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 bg-stone-200 rounded-lg overflow-hidden shrink-0">
+                        <img src={room.image_url} alt={room.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div>
+                        <h3 className="font-serif font-bold text-charcoal text-sm">{room.name}</h3>
+                        <span className="text-xs text-stone-500">Rate: {room.price}</span>
+                      </div>
                     </div>
                     <form action={deleteRoom}>
                       <input type="hidden" name="id" value={room.id} />
                       <button 
                         type="submit" 
-                        className="text-red-600 hover:text-red-800 text-xs font-semibold px-3 py-1.5 bg-red-50 rounded-lg transition-colors"
+                        className="text-red-600 hover:text-red-800 text-xs font-semibold px-3 py-1.5 bg-red-50 rounded-lg transition-colors cursor-pointer"
                       >
                         Delete
                       </button>
@@ -223,14 +257,14 @@ export default async function AdminPage() {
               <input 
                 type="url" 
                 name="imageUrl"
-                placeholder="https://images.unsplash.com/..." 
+                placeholder="https://i.ibb.co/... or https://..." 
                 className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                 required
               />
             </div>
             <button 
               type="submit" 
-              className="bg-charcoal text-cream hover:bg-gold hover:text-charcoal font-semibold py-2.5 rounded-lg transition-all text-sm h-[42px]"
+              className="bg-charcoal text-cream hover:bg-gold hover:text-charcoal font-semibold py-2.5 rounded-lg transition-all text-sm h-[42px] cursor-pointer"
             >
               Save to Cloud Database
             </button>
@@ -240,7 +274,7 @@ export default async function AdminPage() {
             {galleryItems.length === 0 ? (
               <p className="text-stone-500 text-sm italic col-span-full">No gallery items in database yet.</p>
             ) : (
-              galleryItems.map((item: any) => (
+              galleryItems.map((item: GalleryRow) => (
                 <div key={item.id} className="bg-cream p-4 rounded-xl border border-stone-200 flex flex-col justify-between space-y-3">
                   <div>
                     <div className="h-32 bg-stone-200 rounded-lg overflow-hidden mb-2">
@@ -252,7 +286,7 @@ export default async function AdminPage() {
                     <input type="hidden" name="id" value={item.id} />
                     <button 
                       type="submit" 
-                      className="w-full text-red-600 hover:text-red-800 text-xs font-semibold py-1.5 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200"
+                      className="w-full text-red-600 hover:text-red-800 text-xs font-semibold py-1.5 bg-red-50 hover:bg-red-100 rounded-lg transition-colors border border-red-200 cursor-pointer"
                     >
                       Delete Item
                     </button>

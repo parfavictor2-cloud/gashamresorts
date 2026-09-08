@@ -1,18 +1,24 @@
 import { query } from '../lib/db';
 import { revalidatePath } from 'next/cache';
 
-type RoomRow = {
-  id: string | number;
+interface RoomRow {
+  id: number;
   name: string;
   price: string;
+  status: string;
   image_url: string;
-};
+}
 
-type GalleryRow = {
-  id: string | number;
+interface GalleryRow {
+  id: number;
   title: string;
   image_url: string;
-};
+}
+
+interface HeroRow {
+  title: string;
+  image_url: string;
+}
 
 // Server Action to update the dedicated Hero Settings
 async function updateHeroSettings(formData: FormData) {
@@ -98,9 +104,9 @@ export default async function AdminPage() {
   const galleryResult = await query('SELECT * FROM gallery ORDER BY id DESC');
   const heroResult = await query('SELECT * FROM hero_settings WHERE id = 1');
 
-  const rooms = roomsResult.rows;
-  const galleryItems = galleryResult.rows;
-  const currentHero = heroResult.rows[0] || { title: '', image_url: '' };
+  const rooms = roomsResult.rows as RoomRow[];
+  const galleryItems = galleryResult.rows as GalleryRow[];
+  const currentHero = (heroResult.rows[0] as HeroRow) || { title: '', image_url: '' };
 
   return (
     <div className="flex flex-col min-h-screen bg-cream">
@@ -113,8 +119,17 @@ export default async function AdminPage() {
             </span>
             <h1 className="font-serif text-3xl font-bold">Admin Database Dashboard</h1>
           </div>
-          <div className="text-stone-300 text-sm">
-            Neon Cloud Database Active
+          <div className="flex items-center gap-4">
+            <a 
+              href="/" 
+              target="_blank" 
+              className="bg-gold hover:bg-gold-secondary text-charcoal text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl transition-all shadow-sm"
+            >
+              View Live Site ↗
+            </a>
+            <div className="text-stone-300 text-sm hidden sm:block">
+              Neon Cloud Database Active
+            </div>
           </div>
         </div>
       </section>
@@ -138,7 +153,7 @@ export default async function AdminPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Hero Cloud Image URL</label>
+              <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Hero Cloud Image URL (ImgBB)</label>
               <input 
                 type="url" 
                 name="heroImageUrl"
@@ -179,16 +194,16 @@ export default async function AdminPage() {
                   <input 
                     type="text" 
                     name="price"
-                    placeholder="e.g. Inquire or ₦30,000 / night" 
+                    placeholder="e.g. ₦30,000 / night" 
                     className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Room Cloud Image URL (ImgBB / Unsplash)</label>
+                  <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Room Image URL (ImgBB Direct Link)</label>
                   <input 
                     type="url" 
                     name="imageUrl"
-                    placeholder="https://i.ibb.co/... or https://..." 
+                    placeholder="https://i.ibb.co/..." 
                     className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                     required
                   />
@@ -209,7 +224,7 @@ export default async function AdminPage() {
               {rooms.length === 0 ? (
                 <p className="text-stone-500 text-sm italic">No rooms in database yet.</p>
               ) : (
-                rooms.map((room: RoomRow) => (
+                rooms.map((room) => (
                   <div key={room.id} className="flex items-center justify-between p-4 bg-cream rounded-xl border border-stone-200 gap-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-stone-200 rounded-lg overflow-hidden shrink-0">
@@ -239,7 +254,7 @@ export default async function AdminPage() {
         {/* Gallery Manager Section with Add & Delete */}
         <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm">
           <h2 className="font-serif text-2xl font-bold text-charcoal mb-2">Cloud Gallery Manager</h2>
-          <p className="text-stone-600 text-sm mb-6">Add or delete permanent cloud image URLs that sync globally across every browser.</p>
+          <p className="text-stone-600 text-sm mb-6">Add or delete permanent cloud image URLs (ImgBB) that sync globally across every browser.</p>
           
           <form action={addGalleryItem} className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 items-end">
             <div>
@@ -253,11 +268,11 @@ export default async function AdminPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Cloud Image URL</label>
+              <label className="block text-xs font-semibold uppercase text-stone-600 mb-1">Cloud Image URL (ImgBB)</label>
               <input 
                 type="url" 
                 name="imageUrl"
-                placeholder="https://i.ibb.co/... or https://..." 
+                placeholder="https://i.ibb.co/..." 
                 className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:border-gold text-sm"
                 required
               />
@@ -274,7 +289,7 @@ export default async function AdminPage() {
             {galleryItems.length === 0 ? (
               <p className="text-stone-500 text-sm italic col-span-full">No gallery items in database yet.</p>
             ) : (
-              galleryItems.map((item: GalleryRow) => (
+              galleryItems.map((item) => (
                 <div key={item.id} className="bg-cream p-4 rounded-xl border border-stone-200 flex flex-col justify-between space-y-3">
                   <div>
                     <div className="h-32 bg-stone-200 rounded-lg overflow-hidden mb-2">

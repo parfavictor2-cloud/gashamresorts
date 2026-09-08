@@ -1,69 +1,106 @@
-import type { Metadata } from 'next';
+import Link from 'next/link';
 import { query } from '../lib/db';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Rooms & Executive Suites',
-  description: 'Explore comfortable single and double suites at Gasham Resorts and Suites along FGGC Road, Langtang North.',
+  title: 'Rooms & Suites | Gasham Resorts and Suites Langtang North',
+  description: 'Explore our comfortable executive single suites, double rooms, and luxury accommodation equipped with 24/7 power and private amenities in Langtang North.',
 };
 
 export default async function RoomsPage() {
-  const roomsResult = await query('SELECT * FROM rooms ORDER BY id DESC');
-  const rooms = roomsResult.rows;
+  // Fetch room inventory from Neon database
+  const roomsResult = await query('SELECT * FROM rooms ORDER BY id ASC');
+  const rooms = roomsResult.rows.length > 0 ? roomsResult.rows : [
+    {
+      id: 1,
+      name: 'Executive Single Suite',
+      description: 'Comfortable private accommodation designed for individual stays with full amenities.',
+      price: 'Contact for Rate',
+      image_url: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32',
+      capacity: '1-2 Guests'
+    },
+    {
+      id: 2,
+      name: 'Deluxe Double Suite',
+      description: 'Spacious suite featuring enhanced lounging space, plush bedding, and premium comfort.',
+      price: 'Contact for Rate',
+      image_url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b',
+      capacity: '2-3 Guests'
+    }
+  ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-cream">
-      {/* Header Section */}
-      <section className="bg-charcoal text-cream py-16 px-4 text-center border-b border-gold/20">
-        <div className="max-w-4xl mx-auto">
-          <span className="text-gold uppercase tracking-widest text-xs font-semibold mb-2 inline-block bg-gold/10 px-3 py-1 rounded-full">
-            Accommodation & Rates
+    <div className="min-h-screen bg-cream py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-12">
+        
+        {/* Header */}
+        <div className="text-center space-y-4 max-w-2xl mx-auto">
+          <span className="text-gold uppercase tracking-widest text-xs font-semibold bg-gold/10 px-3 py-1 rounded-full border border-gold/20">
+            Accommodation
           </span>
-          <h1 className="font-serif text-4xl sm:text-5xl font-bold mb-4">Our Luxury Suites</h1>
-          <p className="text-stone-300 text-sm sm:text-base max-w-2xl mx-auto">
-            Experience absolute comfort, security, and 24/7 power supply in Langtang North, Plateau State.
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold text-charcoal">
+            Rooms & Executive Suites
+          </h1>
+          <p className="text-stone-600 text-base">
+            Every stay includes uninterrupted power supply, top-tier security, and access to our on-site restaurant and bar.
           </p>
         </div>
-      </section>
 
-      {/* Rooms Grid Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full flex-grow">
-        {rooms.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-gold/20 p-8 shadow-sm max-w-xl mx-auto">
-            <h3 className="font-serif text-xl font-bold text-charcoal mb-2">Suites Updating</h3>
-            <p className="text-stone-600 text-sm">
-              We are currently updating our room inventory. Please reach out directly for reservations.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {rooms.map((room: any) => (
-              <div 
-                key={room.id} 
-                className="bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-sm flex flex-col justify-between"
-              >
-                <div className="p-6 sm:p-8 space-y-4">
-                  <h3 className="font-serif text-2xl font-bold text-charcoal">{room.name}</h3>
-                  <div className="text-stone-700 font-semibold text-lg">
-                    Rate: <span className="text-gold-secondary font-serif">{room.price}</span>
-                  </div>
-                  <p className="text-stone-600 text-sm">
-                    Includes comfortable bedding, private facilities, complimentary amenities, and access to resort amenities past Jimmy Cato Junction.
-                  </p>
+        {/* Room Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {rooms.map((room: any) => (
+            <div key={room.id} className="bg-white rounded-2xl shadow-sm border border-gold/20 overflow-hidden flex flex-col transition-all hover:shadow-md">
+              <div className="relative h-56 w-full">
+                <img 
+                  src={room.image_url || 'https://images.unsplash.com/photo-1566073771259-6a8506099945'} 
+                  alt={room.name}
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute top-4 right-4 bg-charcoal/80 backdrop-blur-sm text-gold text-xs font-semibold px-3 py-1 rounded-full">
+                  {room.capacity || '2 Guests'}
+                </span>
+              </div>
+
+              <div className="p-6 flex-1 flex flex-col justify-between space-y-6">
+                <div className="space-y-3">
+                  <h3 className="font-serif font-bold text-xl text-charcoal">{room.name}</h3>
+                  <p className="text-stone-600 text-sm leading-relaxed">{room.description}</p>
+                  
+                  {/* Features Checklist */}
+                  <ul className="space-y-2 pt-2 text-xs text-stone-700 font-medium">
+                    <li className="flex items-center space-x-2">
+                      <span className="text-gold">✓</span> <span>24/7 Power Supply</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <span className="text-gold">✓</span> <span>Private Bathroom & Toilet</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <span className="text-gold">✓</span> <span>Flat Screen TV & Entertainment</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
+                      <span className="text-gold">✓</span> <span>Daily Housekeeping Available</span>
+                    </li>
+                  </ul>
                 </div>
-                
-                <div className="p-6 bg-cream border-t border-stone-200">
+
+                <div className="pt-4 border-t border-gold/10 flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-stone-500 uppercase tracking-wider">Inquiries & Booking</span>
+                    <span className="text-sm font-bold text-charcoal">{room.price || 'Call for Rate'}</span>
+                  </div>
                   <a 
-                    href="tel:+2348000000000" 
-                    className="block w-full text-center bg-charcoal hover:bg-gold hover:text-charcoal text-cream font-semibold py-3 rounded-xl transition-all text-sm shadow-sm"
+                    href="tel:+2348104169470" 
+                    className="bg-charcoal hover:bg-gold hover:text-charcoal text-cream text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl transition-all shadow-sm"
                   >
-                    Call Front Desk to Book
+                    Call to Book
                   </a>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </section>
+            </div>
+          ))}
+        </div>
+
+      </div>
     </div>
   );
 }

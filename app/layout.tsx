@@ -1,44 +1,25 @@
 import type { Metadata } from 'next';
-import { Fraunces, Work_Sans } from 'next/font/google';
 import './globals.css';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-fraunces',
-  display: 'swap',
-});
-
-const workSans = Work_Sans({
-  subsets: ['latin'],
-  variable: '--font-work-sans',
-  display: 'swap',
-});
+import Navbar from './components/Navbar'; // Update path if your navbar is elsewhere
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://gashamresorts.vercel.app'),
-  title: {
-    default: 'Gasham Resorts and Suites | Langtang North',
-    template: '%s | Gasham Resorts and Suites',
-  },
-  description: 'Experience premium comfort at Gasham Resorts and Suites in Langtang North, Plateau State. Featuring single and double suites, 24/7 power, restaurant, bar, and viewing centre along FGGC Road.',
-  keywords: ['Gasham Resorts', 'Langtang North hotel', 'Plateau State accommodation', 'suites in Langtang', 'FGGC Road hotel', 'relaxation spot Langtang North'],
+  title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North, Plateau State',
+  description: 'Experience absolute comfort, 24/7 power supply, secure parking, and fine hospitality at Gasham Resorts and Suites past Jimmy Cato Junction along FGGC Road, Langtang North.',
+  keywords: ['hotel in Langtang North', 'accommodation in Langtang', 'suites in Langtang North', 'hotels in Plateau State', 'restaurant in Langtang North', 'Gasham Resorts'],
   openGraph: {
-    type: 'website',
-    locale: 'en_NG',
-    url: 'https://gashamresorts.vercel.app',
+    title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North',
+    description: 'Experience absolute comfort, 24/7 power supply, and fine hospitality along FGGC Road, Langtang North.',
+    url: 'https://gashamresorts.com',
     siteName: 'Gasham Resorts and Suites',
-    title: 'Gasham Resorts and Suites | Langtang North',
-    description: 'Your home for comfort, relaxation, and hospitality past Jimmy Cato Junction along FGGC Road, Langtang North.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Gasham Resorts and Suites Langtang North',
-      },
-    ],
+    images: [{ url: '/image.png', width: 1200, height: 630, alt: 'Gasham Resorts and Suites Logo' }],
+    locale: 'en_NG',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gasham Resorts & Suites | Langtang North',
+    description: 'Premier accommodation, executive suites, restaurant, and bar past Jimmy Cato Junction along FGGC Road.',
+    images: ['/image.png'],
   },
 };
 
@@ -51,35 +32,49 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'LodgingBusiness',
     name: 'Gasham Resorts and Suites',
-    image: 'https://gashamresorts.vercel.app/og-image.jpg',
+    image: 'https://gashamresorts.com/image.png',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Jimmy Cato Junction, FGGC Road',
+      streetAddress: 'Past Jimmy Cato Junction, FGGC Road',
       addressLocality: 'Langtang North',
       addressRegion: 'Plateau State',
       addressCountry: 'NG',
     },
-    url: 'https://gashamresorts.vercel.app',
+    telephone: '+2348104169470',
     priceRange: '₦₦',
+    url: 'https://gashamresorts.com',
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: '24/7 Power Supply', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Restaurant & Bar', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Viewing Centre', value: true },
-    ],
+      { '@type': 'LocationFeatureSpecification', name: 'Restaurant and Bar', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Secure Parking', value: true }
+    ]
   };
 
   return (
-    <html lang="en" className={`${fraunces.variable} ${workSans.variable}`}>
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-cream text-charcoal font-sans antialiased">
+      <body className="bg-cream text-charcoal font-sans antialiased pb-16 md:pb-0">
         <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
+        <main>{children}</main>
+
+        {/* Persistent Sticky Mobile Call-to-Action Bar */}
+        <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur border-t border-gold/30 px-4 py-3 flex items-center justify-between shadow-lg">
+          <div className="flex flex-col">
+            <span className="text-[10px] uppercase tracking-wider text-gold font-semibold">Direct Booking</span>
+            <span className="text-cream text-xs font-medium">0810 416 9470</span>
+          </div>
+          <a
+            href="tel:+2348104169470"
+            className="bg-gold hover:bg-gold-secondary text-charcoal text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg shadow transition-all flex items-center space-x-2"
+          >
+            <span>📞 Call to Book</span>
+          </a>
+        </div>
       </body>
     </html>
   );

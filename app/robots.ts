@@ -1,14 +1,12 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://gashamresorts.com'; // Update with your actual domain
-
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/admin', // Keep search engines out of your management dashboard
+      disallow: '/admin/', // Keeps your custom inventory management CRUD panel private from web crawlers
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: 'https://gashamresorts.vercel.app/sitemap.xml',
   };
 }

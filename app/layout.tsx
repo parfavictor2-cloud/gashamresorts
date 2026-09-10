@@ -1,11 +1,14 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from './components/Navbar'; // Update path if your navbar is elsewhere
+import Navbar from './components/Navbar';
 
 export const metadata: Metadata = {
   title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North, Plateau State',
   description: 'Experience absolute comfort, 24/7 power supply, secure parking, and fine hospitality at Gasham Resorts and Suites past Jimmy Cato Junction along FGGC Road, Langtang North.',
   keywords: ['hotel in Langtang North', 'accommodation in Langtang', 'suites in Langtang North', 'hotels in Plateau State', 'restaurant in Langtang North', 'Gasham Resorts'],
+  verification: {
+    google: 'QtBHwZz58ijLGlvjkIHPzwQ6AfLzXiRm_xW_QWSz51E',
+  },
   openGraph: {
     title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North',
     description: 'Experience absolute comfort, 24/7 power supply, and fine hospitality along FGGC Road, Langtang North.',

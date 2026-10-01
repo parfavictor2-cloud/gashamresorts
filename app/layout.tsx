@@ -41,9 +41,12 @@ export default function RootLayout({
 }) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'LodgingBusiness',
+    '@type': 'Hotel',
+    '@id': `${SITE_URL}/#hotel`,
     name: 'Gasham Resorts and Suites',
+    alternateName: 'Gasham Resorts & Suites',
     image: `${SITE_URL}/image.png`,
+    description: 'Executive accommodation with on-site dining, secure parking, and 24/7 power in Langtang North, Plateau State.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Past Jimmy Cato Junction, FGGC Road',
@@ -52,13 +55,24 @@ export default function RootLayout({
       addressCountry: 'NG',
     },
     telephone: '+2348104169470',
+    areaServed: {
+      '@type': 'AdministrativeArea',
+      name: 'Langtang North, Plateau State',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+2348104169470',
+      contactType: 'reservations',
+      availableLanguage: ['English'],
+    },
     priceRange: '₦₦',
     url: SITE_URL,
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: '24/7 Power Supply', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Restaurant and Bar', value: true },
-      { '@type': 'LocationFeatureSpecification', name: 'Secure Parking', value: true }
-    ]
+      { '@type': 'LocationFeatureSpecification', name: 'Secure Parking', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Viewing Centre', value: true },
+    ],
   };
 
   return (

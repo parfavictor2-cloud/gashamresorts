@@ -1,5 +1,6 @@
 import { query } from '../lib/db';
 import { revalidatePath } from 'next/cache';
+import { ArrowUpRight } from 'lucide-react';
 
 interface RoomRow {
   id: number;
@@ -119,9 +120,9 @@ export default async function AdminPage() {
             <a 
               href="/" 
               target="_blank" 
-              className="bg-gold hover:bg-gold-secondary text-charcoal text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl transition-all shadow-sm"
+              className="bg-gold hover:bg-gold-secondary text-charcoal text-xs font-bold uppercase tracking-wider px-4 py-2 rounded-xl transition-all shadow-sm inline-flex items-center gap-1"
             >
-              View Live Site ↗
+              View Live Site <ArrowUpRight size={14} aria-hidden="true" />
             </a>
             <div className="text-stone-300 text-sm hidden sm:block">
               Neon Cloud Database Active

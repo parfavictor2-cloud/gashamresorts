@@ -1,16 +1,27 @@
-import Link from 'next/link';
 import { query } from '../lib/db';
 import type { Metadata } from 'next';
+import { createPageMetadata } from '../lib/site';
+import { Check } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Rooms & Suites | Gasham Resorts and Suites Langtang North',
-  description: 'Explore our comfortable executive single suites, double rooms, and luxury accommodation equipped with 24/7 power and private amenities in Langtang North.',
-};
+interface RoomRow {
+  id: number;
+  name: string;
+  description: string | null;
+  price: string | null;
+  image_url: string | null;
+  capacity: string | null;
+}
+
+export const metadata: Metadata = createPageMetadata(
+  'Rooms & Suites in Langtang North',
+  'Explore executive single and double suites at Gasham Resorts in Langtang North, with private amenities and 24/7 power. Call 0810 416 9470 for rates.',
+  '/rooms',
+);
 
 export default async function RoomsPage() {
   // Fetch room inventory from Neon database
   const roomsResult = await query('SELECT * FROM rooms ORDER BY id ASC');
-  const rooms = roomsResult.rows.length > 0 ? roomsResult.rows : [
+  const rooms: RoomRow[] = roomsResult.rows.length > 0 ? roomsResult.rows as RoomRow[] : [
     {
       id: 1,
       name: 'Executive Single Suite',
@@ -48,7 +59,7 @@ export default async function RoomsPage() {
 
         {/* Room Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {rooms.map((room: any) => (
+          {rooms.map((room) => (
             <div key={room.id} className="bg-white rounded-2xl shadow-sm border border-gold/20 overflow-hidden flex flex-col transition-all hover:shadow-md">
               <div className="relative h-56 w-full">
                 <img 
@@ -69,16 +80,16 @@ export default async function RoomsPage() {
                   {/* Features Checklist */}
                   <ul className="space-y-2 pt-2 text-xs text-stone-700 font-medium">
                     <li className="flex items-center space-x-2">
-                      <span className="text-gold">✓</span> <span>24/7 Power Supply</span>
+                      <Check size={16} className="text-gold shrink-0" aria-hidden="true" /> <span>24/7 Power Supply</span>
                     </li>
                     <li className="flex items-center space-x-2">
-                      <span className="text-gold">✓</span> <span>Private Bathroom & Toilet</span>
+                      <Check size={16} className="text-gold shrink-0" aria-hidden="true" /> <span>Private Bathroom & Toilet</span>
                     </li>
                     <li className="flex items-center space-x-2">
-                      <span className="text-gold">✓</span> <span>Flat Screen TV & Entertainment</span>
+                      <Check size={16} className="text-gold shrink-0" aria-hidden="true" /> <span>Flat Screen TV & Entertainment</span>
                     </li>
                     <li className="flex items-center space-x-2">
-                      <span className="text-gold">✓</span> <span>Daily Housekeeping Available</span>
+                      <Check size={16} className="text-gold shrink-0" aria-hidden="true" /> <span>Daily Housekeeping Available</span>
                     </li>
                   </ul>
                 </div>

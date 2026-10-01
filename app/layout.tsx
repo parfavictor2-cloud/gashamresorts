@@ -1,18 +1,26 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from './components/Navbar';
+import { SITE_URL } from './lib/site';
+import { Phone } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North, Plateau State',
-  description: 'Experience absolute comfort, 24/7 power supply, secure parking, and fine hospitality at Gasham Resorts and Suites past Jimmy Cato Junction along FGGC Road, Langtang North.',
-  keywords: ['hotel in Langtang North', 'accommodation in Langtang', 'suites in Langtang North', 'hotels in Plateau State', 'restaurant in Langtang North', 'Gasham Resorts'],
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Gasham Resorts & Suites | Hotel in Langtang North',
+    template: '%s | Gasham Resorts & Suites',
+  },
+  description: 'Stay at Gasham Resorts & Suites in Langtang North, Plateau State. Enjoy executive suites, on-site dining, secure parking, and 24/7 power. Call 0810 416 9470.',
+  alternates: {
+    canonical: '/',
+  },
   verification: {
     google: 'QtBHwZz58ijLGlvjkIHPzwQ6AfLzXiRm_xW_QWSz51E',
   },
   openGraph: {
-    title: 'Gasham Resorts & Suites | Hotel & Accommodation in Langtang North',
-    description: 'Experience absolute comfort, 24/7 power supply, and fine hospitality along FGGC Road, Langtang North.',
-    url: 'https://gashamresorts.com',
+    title: 'Gasham Resorts & Suites | Hotel in Langtang North',
+    description: 'Executive suites, on-site dining, secure parking, and 24/7 power in Langtang North, Plateau State.',
+    url: SITE_URL,
     siteName: 'Gasham Resorts and Suites',
     images: [{ url: '/image.png', width: 1200, height: 630, alt: 'Gasham Resorts and Suites Logo' }],
     locale: 'en_NG',
@@ -35,7 +43,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'LodgingBusiness',
     name: 'Gasham Resorts and Suites',
-    image: 'https://gashamresorts.com/image.png',
+    image: `${SITE_URL}/image.png`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Past Jimmy Cato Junction, FGGC Road',
@@ -45,7 +53,7 @@ export default function RootLayout({
     },
     telephone: '+2348104169470',
     priceRange: '₦₦',
-    url: 'https://gashamresorts.com',
+    url: SITE_URL,
     amenityFeature: [
       { '@type': 'LocationFeatureSpecification', name: '24/7 Power Supply', value: true },
       { '@type': 'LocationFeatureSpecification', name: 'Restaurant and Bar', value: true },
@@ -75,7 +83,8 @@ export default function RootLayout({
             href="tel:+2348104169470"
             className="bg-gold hover:bg-gold-secondary text-charcoal text-xs font-bold uppercase tracking-wider px-5 py-2.5 rounded-lg shadow transition-all flex items-center space-x-2"
           >
-            <span>📞 Call to Book</span>
+            <Phone size={14} aria-hidden="true" />
+            <span>Call to Book</span>
           </a>
         </div>
       </body>

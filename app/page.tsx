@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { MapPin, ShieldCheck, Utensils, Zap } from 'lucide-react';
 import { query } from './lib/db';
 
 export default async function Home() {
@@ -30,11 +31,11 @@ export default async function Home() {
           </div>
 
           <h1 className="font-serif text-4xl sm:text-6xl font-bold max-w-3xl leading-tight">
-            Comfortable stays in Langtang North.
+            Hotel and executive suites in Langtang North
           </h1>
           
           <p className="text-stone-300 text-base sm:text-lg max-w-xl font-medium">
-            Executive suites • On-site restaurant & bar • 24/7 power supply. Located past Jimmy Cato Junction along FGGC Road.
+            {hero.title}. Stay at Gasham Resorts & Suites in Plateau State, past Jimmy Cato Junction along FGGC Road. Enjoy executive suites, on-site dining, secure parking, and 24/7 power.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
@@ -59,22 +60,22 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold/10">
-              <div className="text-gold text-2xl mb-3">⚡</div>
+              <div className="text-gold mb-3"><Zap size={24} aria-hidden="true" /></div>
               <h3 className="font-bold text-charcoal text-lg mb-1">24/7 Power Supply</h3>
               <p className="text-stone-600 text-sm">Reliable, uninterrupted electricity for a completely comfortable stay.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold/10">
-              <div className="text-gold text-2xl mb-3">📍</div>
+              <div className="text-gold mb-3"><MapPin size={24} aria-hidden="true" /></div>
               <h3 className="font-bold text-charcoal text-lg mb-1">Prime Location</h3>
               <p className="text-stone-600 text-sm">Easily accessible past Jimmy Cato Junction along FGGC Road.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold/10">
-              <div className="text-gold text-2xl mb-3">🍽️</div>
+              <div className="text-gold mb-3"><Utensils size={24} aria-hidden="true" /></div>
               <h3 className="font-bold text-charcoal text-lg mb-1">On-site Dining</h3>
               <p className="text-stone-600 text-sm">Full restaurant and bar available right on the premises for guests.</p>
             </div>
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-gold/10">
-              <div className="text-gold text-2xl mb-3">🛡️</div>
+              <div className="text-gold mb-3"><ShieldCheck size={24} aria-hidden="true" /></div>
               <h3 className="font-bold text-charcoal text-lg mb-1">Secure & Private</h3>
             <p className="text-stone-600 text-sm">Designed for safe, quiet short or extended executive stays.</p>
             </div>

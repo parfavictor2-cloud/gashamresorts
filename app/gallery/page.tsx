@@ -1,14 +1,22 @@
 import type { Metadata } from 'next';
 import { query } from '../lib/db';
+import { createPageMetadata } from '../lib/site';
 
-export const metadata: Metadata = {
-  title: 'Photo Gallery',
-  description: 'Take a visual tour of our rooms, restaurant, bar, and relaxation spaces at Gasham Resorts and Suites in Langtang North.',
-};
+interface GalleryItem {
+  id: number;
+  title: string;
+  image_url: string;
+}
+
+export const metadata: Metadata = createPageMetadata(
+  'Resort Photos in Langtang North',
+  'View photos of the rooms and facilities at Gasham Resorts & Suites in Langtang North, Plateau State.',
+  '/gallery',
+);
 
 export default async function GalleryPage() {
   const result = await query('SELECT * FROM gallery ORDER BY id DESC');
-  const galleryItems = result.rows;
+  const galleryItems = result.rows as GalleryItem[];
 
   return (
     <div className="flex flex-col min-h-screen bg-cream">
@@ -36,7 +44,7 @@ export default async function GalleryPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {galleryItems.map((item: any) => (
+            {galleryItems.map((item) => (
               <div 
                 key={item.id} 
                 className="bg-white rounded-2xl overflow-hidden border border-gold/20 shadow-sm transition-transform duration-300 hover:-translate-y-1"

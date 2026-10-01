@@ -1,10 +1,12 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
+import { createPageMetadata } from '../lib/site';
+import { Bell, ShieldCheck, Tv, Utensils, Wine, Zap } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Resort Amenities & Facilities',
-  description: 'Discover world-class hospitality facilities at Gasham Resorts and Suites. Enjoy 24/7 power, our onsite bar, restaurant serving local dishes, and football viewing centre.',
-};
+export const metadata: Metadata = createPageMetadata(
+  'Resort Amenities in Langtang North',
+  'See the facilities at Gasham Resorts in Langtang North, including 24/7 power, on-site restaurant and bar, viewing centre, and secure parking.',
+  '/amenities',
+);
 
 export default function AmenitiesPage() {
   return (
@@ -32,7 +34,7 @@ export default function AmenitiesPage() {
           {/* Amenity 1: 24/7 Power */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">⚡</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><Zap size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">24/7 Power Supply</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Never experience blackouts during your stay. Our robust, always-on backup power generation ensures complete comfort, lighting, and ventilation around the clock.
@@ -44,7 +46,7 @@ export default function AmenitiesPage() {
           {/* Amenity 2: Restaurant */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">🍽️</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><Utensils size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">Onsite Restaurant</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Savor delicious local and contemporary Nigerian dishes prepared fresh daily by expert chefs using the finest ingredients. Clean dining ambiance available.
@@ -56,7 +58,7 @@ export default function AmenitiesPage() {
           {/* Amenity 3: Bar & Drinks */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">🥂</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><Wine size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">Fully Stocked Bar</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Unwind after a busy day with a wide selection of chilled alcoholic and non-alcoholic beverages served in a relaxed, secure lounge setting.
@@ -68,7 +70,7 @@ export default function AmenitiesPage() {
           {/* Amenity 4: Viewing Centre */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">📺</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><Tv size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">Viewing Centre</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Catch all major football matches and live sporting events on big screens in our vibrant viewing centre alongside fellow sports enthusiasts.
@@ -80,7 +82,7 @@ export default function AmenitiesPage() {
           {/* Amenity 5: Security & Parking */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">🛡️</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><ShieldCheck size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">Secure Parking & Grounds</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Your peace of mind matters. We feature secure vehicle parking space and trained personnel to maintain a safe, welcoming environment throughout your visit.
@@ -92,7 +94,7 @@ export default function AmenitiesPage() {
           {/* Amenity 6: Customer Support */}
           <div className="bg-white p-8 rounded-2xl border border-gold/20 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold font-bold text-xl mb-6">🛎️</div>
+              <div className="w-12 h-12 bg-gold/15 rounded-xl flex items-center justify-center text-gold mb-6"><Bell size={24} aria-hidden="true" /></div>
               <h3 className="font-serif text-2xl font-bold text-charcoal mb-3">24/7 Front Desk Support</h3>
               <p className="text-stone-600 text-sm leading-relaxed mb-6">
                 Our courteous front desk attendants and room service team are always on standby to ensure your immediate requests are met promptly.

@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
+import { createPageMetadata } from '../lib/site';
+import { Map, MapPin, Phone, Zap } from 'lucide-react';
 
-export const metadata: Metadata = {
-  title: 'Contact & Location | Gasham Resorts and Suites Langtang North',
-  description: 'Get in touch with Gasham Resorts and Suites. Located past Jimmy Cato Junction along FGGC Road, Langtang North, Plateau State. Call 0810 416 9470.',
-};
+export const metadata: Metadata = createPageMetadata(
+  'Contact & Location in Langtang North',
+  'Contact Gasham Resorts & Suites for bookings and directions. Located past Jimmy Cato Junction on FGGC Road, Langtang North. Call 0810 416 9470.',
+  '/contact',
+);
 
 export default function ContactPage() {
   return (
@@ -33,7 +36,7 @@ export default function ContactPage() {
 
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
-                <div className="text-gold text-2xl mt-1">📍</div>
+                <div className="text-gold mt-1"><MapPin size={24} aria-hidden="true" /></div>
                 <div>
                   <h4 className="font-bold text-charcoal text-sm uppercase tracking-wider">Exact Location</h4>
                   <p className="text-stone-600 text-sm mt-1">
@@ -44,7 +47,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="text-gold text-2xl mt-1">📞</div>
+                <div className="text-gold mt-1"><Phone size={24} aria-hidden="true" /></div>
                 <div>
                   <h4 className="font-bold text-charcoal text-sm uppercase tracking-wider">Phone Bookings</h4>
                   <p className="text-stone-600 text-sm mt-1">
@@ -57,7 +60,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start space-x-4">
-                <div className="text-gold text-2xl mt-1">⚡</div>
+                <div className="text-gold mt-1"><Zap size={24} aria-hidden="true" /></div>
                 <div>
                   <h4 className="font-bold text-charcoal text-sm uppercase tracking-wider">Facility Services</h4>
                   <p className="text-stone-600 text-sm mt-1">
@@ -89,7 +92,7 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-charcoal/5 rounded-xl p-8 border border-gold/10 text-center space-y-4">
-              <div className="text-4xl">🗺️</div>
+              <div className="text-gold flex justify-center"><Map size={36} aria-hidden="true" /></div>
               <h4 className="font-bold text-charcoal text-base">Langtang North, Plateau State</h4>
               <p className="text-xs text-stone-600">
                 Need help with directions? Our front desk staff are available to guide you over the phone.
